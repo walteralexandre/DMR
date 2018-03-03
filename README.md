@@ -1,10 +1,12 @@
-DMR = DITADO MELÓDICO RELATIVO
+352/5000
+DMR = Relative Melodic Dictation
 
-Ferramenta para auxiliar no estudo de percepção musical.
+Tool to assist in the study of musical perception.
 
-Acesse através do link https://walteralexandre.github.io/DMR/index.html.
+Access through the link https://walteralexandre.github.io/DMR/index.html.
 
-IMPORTANTE:
-- Compatível com os navegadores Google Chrome e Opera.
-- Pode demorar um pouco pra carregar, dependendo de sua conexão com a Internet.
-- Não está otimizado para telas pequenas.
+IMPORTANT:
+- Compatible with Google Chrome and Opera browsers.
+- It may take a while to load at first, depending on your Internet connection.
+- NOT optimized for small screens.
+- It's in brazilian portuguese language.
