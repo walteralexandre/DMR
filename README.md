@@ -2,7 +2,7 @@ DMR = Relative Melodic Dictation
 
 A tool to assist in the study of musical perception.
 
-Access through the link https://walteralexandre.github.io/DMR/index.html.
+Access through the link https://walteralexandre.github.io/DMR/.
 
 IMPORTANT:
 - Compatible with Google Chrome and Opera browsers.
