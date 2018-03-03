@@ -1,0 +1,855 @@
+﻿<!doctype html>
+<html manifest="dmr.manifest">
+<head>
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+<meta name="apple-mobile-web-app-title" content="Ditado Mel&oacute;dico Relativo">
+<title>Ditado Mel&oacute;dico Relativo</title>
+<style>
+	input[type='checkbox'].grid, .grid_correto, .grid_errado {width: 40px; height: 40px;}
+	summary{font-size:24px;}
+	audio{width:100%;}
+	.pgbar{border:#501607 1px solid; height:30px; border-radius:7px;}
+	#pgb_minimo,#pgb_media,#pgb_maximo {
+		width: 50%;
+		height: 100%;
+		background-color: #501607;
+		background-image: -webkit-gradient(linear, 50.00% 0.00%, 50.00% 100.00%, color-stop( 0% , rgba(80,22,7,1.00)),color-stop( 53.37% , rgba(160,44,14,1.00)),color-stop( 100% , rgba(80,22,7,1.00)));
+		background-image: -webkit-linear-gradient(270deg,rgba(80,22,7,1.00) 0%,rgba(160,44,14,1.00) 53.37%,rgba(80,22,7,1.00) 100%);
+		background-image: linear-gradient(180deg,rgba(80,22,7,1.00) 0%,rgba(160,44,14,1.00) 53.37%,rgba(80,22,7,1.00) 100%);
+	}
+	input[type='button']{
+		color: #d9b180;
+		height: 40px;
+		border: #501607 1px solid;
+		border-radius: 10px;
+		background-color: #501607;
+		background-image: -webkit-gradient(linear, 50.00% 0.00%, 50.00% 100.00%, color-stop( 0% , rgba(80,22,7,1.00)),color-stop( 53.37% , rgba(160,44,14,1.00)),color-stop( 100% , rgba(80,22,7,1.00)));
+		background-image: -webkit-linear-gradient(270deg,rgba(80,22,7,1.00) 0%,rgba(160,44,14,1.00) 53.37%,rgba(80,22,7,1.00) 100%);
+		background-image: linear-gradient(180deg,rgba(80,22,7,1.00) 0%,rgba(160,44,14,1.00) 53.37%,rgba(80,22,7,1.00) 100%);
+	}
+	select, option {
+		background: #501607;
+		color: #d9b180;
+		border:#501607 1px solid;
+		border-radius: 5px;
+		background-image: -webkit-gradient(linear, 50.00% 0.00%, 50.00% 100.00%, color-stop( 0% , rgba(80,22,7,1.00)),color-stop( 53.37% , rgba(160,44,14,1.00)),color-stop( 100% , rgba(80,22,7,1.00)));
+		background-image: -webkit-linear-gradient(270deg,rgba(80,22,7,1.00) 0%,rgba(160,44,14,1.00) 53.37%,rgba(80,22,7,1.00) 100%);
+		background-image: linear-gradient(180deg,rgba(80,22,7,1.00) 0%,rgba(160,44,14,1.00) 53.37%,rgba(80,22,7,1.00) 100%);
+	}
+	
+	.grid, .grid_correto, .grid_errado {
+		-webkit-appearance: none;
+		border: 1px solid #501607;
+		border-radius: 5px;
+		display: inline-block;
+		position: relative;
+	}
+	.grid:focus, .grid_correto:focus, .grid_errado:focus {display:none;}
+	.grid:checked, .grid_correto:checked, .grid_errado:checked {
+		background-color: #501607;
+		border: 1px solid #501607;
+		background-image: -webkit-gradient(linear, 50.00% 0.00%, 50.00% 100.00%, color-stop( 0% , rgba(80,22,7,1.00)),color-stop( 53.37% , rgba(160,44,14,1.00)),color-stop( 100% , rgba(80,22,7,1.00)));
+		background-image: -webkit-linear-gradient(270deg,rgba(80,22,7,1.00) 0%,rgba(160,44,14,1.00) 53.37%,rgba(80,22,7,1.00) 100%);
+		background-image: linear-gradient(180deg,rgba(80,22,7,1.00) 0%,rgba(160,44,14,1.00) 53.37%,rgba(80,22,7,1.00) 100%);
+	}
+	.grid:checked:after {
+		content: '\266b';
+		font-size: 40px;
+		position: absolute;
+		top: -8px;
+		left: 4px;
+		color: #d9b180;
+	}
+	.grid_correto:checked:after {
+		content: '\2714';
+		font-size: 40px;
+		position: absolute;
+		top: -8px;
+		left: 4px;
+		color: #d9b180;
+	}
+	.grid_errado:checked:after {
+		content: '\2718';
+		font-size: 40px;
+		position: absolute;
+		top: -8px;
+		left: 4px;
+		color: #d9b180;
+	}
+	
+	audio{
+		-webkit-appearance:none;
+		background-color: #501607;
+		border: 1px solid #501607;
+		border-radius:7px;
+		background-image: -webkit-gradient(linear, 50.00% 0.00%, 50.00% 100.00%, color-stop( 0% , rgba(80,22,7,1.00)),color-stop( 53.37% , rgba(160,44,14,1.00)),color-stop( 100% , rgba(80,22,7,1.00)));
+		background-image: -webkit-linear-gradient(270deg,rgba(80,22,7,1.00) 0%,rgba(160,44,14,1.00) 53.37%,rgba(80,22,7,1.00) 100%);
+		background-image: linear-gradient(180deg,rgba(80,22,7,1.00) 0%,rgba(160,44,14,1.00) 53.37%,rgba(80,22,7,1.00) 100%);
+	}
+</style>
+<link rel="apple-touch-icon" href="img/apple-touch-icon-76x76.png">
+<link rel="apple-touch-startup-image" href="img/startup.png">
+
+<link href="jQueryAssets/jquery.ui.core.min.css" rel="stylesheet" type="text/css">
+<link href="jQueryAssets/jquery.ui.theme.min.css" rel="stylesheet" type="text/css">
+<link href="jQueryAssets/jquery.ui.tabs.min.css" rel="stylesheet" type="text/css">
+<script src="jQueryAssets/jquery-1.8.3.min.js" type="text/javascript"></script>
+<script src="jQueryAssets/jquery-ui-1.9.2.tabs.custom.min.js" type="text/javascript"></script>
+<script src="sf_piano_steimway.js"></script>
+<script src="sound.js"></script>
+<script>
+	var config = {
+		intervalos:		null,
+		qtdeNotas:		0,
+		velocidade:		0,
+		iniciaRaiz:		true,
+		limiteMinRaiz:	0,
+		limiteMaxRaiz:	0,
+		
+		setConfig: function() {
+			// OBTENDO VALORES DO FORMULÁRIO DE CONFIGURAÇÕES 
+			this.qtdeNotas 		= parseInt(document.getElementById("form['qtdeNotas']").value);
+			this.velocidade 	= parseInt(document.getElementById("form['velocidade']").value);
+			this.iniciaRaiz		= document.getElementById("form['iniciaRaiz']").checked;
+			this.limiteMinRaiz 	= parseInt(document.getElementById("form['limiteMinRaiz']").value);
+			this.limiteMaxRaiz 	= parseInt(document.getElementById("form['limiteMaxRaiz']").value); 
+			
+			// OBTENDO ÍNDICES DO GRID DE INTERVALOS E OITAVAS
+			// O ÍNDICE ZERO É A NOTA RAIZ
+			//   ÍNDICES POSITIVOS CORRESPONDEM A NOTAS ACIMA DA RAIZ
+			//   ÍNDICES POSITIVOS CORRESPONDEM A NOTAS ABAIXO DA RAIZ
+			this.intervalos = [];
+			for (var o=0; o<7; o++) {
+				for (var i=0; i<12; i++) {
+					if (document.getElementById("gridIO["+(6-o)+"]["+i+"]").checked) {
+						this.intervalos[this.intervalos.length] = o*12 + i - 36;
+					}
+				}
+			}
+			
+			// REDIRECIONA PARA ABA DE DITADO
+			document.getElementById("tab2").click();
+			ditado.createGrid();
+			ditado.novo();
+		}
+	};
+	
+	var ditado = {
+		midinotes: 	null,		// ARRAY COM NOTAS MIDI (CÓDIGO MIDI PARA NOTAS MÚSICAIS)
+		mp3notes:	null,		// CONTÉM MP3 DE CADA NOTA SEPARADAMENTE
+		ditadomidi:	null,		// CONTÉM O DITADO EM NOTAS MIDI
+		mp3:		null,		// CONTÉM MP3 DO DITADO INTEIRO
+		notaRaiz:	0,			// NOTA MIDI PARA A RAIZ DO DITADO
+		acertos:	0,			// QUANTIDADE DE ACERTOS
+		erros:		0,			// QUANTIDADE DE ERROS
+		primeiraResposta: false, // INDICA SE JÁ HOUVE UMA TENTATIVA DE RESPOSTA DO EXERCÍCIO ATUAL
+		
+		// CRIA UM GRID COM CHECKBOXES PARA RESPONDER AO DITADO
+		createGrid: function() {
+			// O GRID DE RESPOSTA É UMA MATRIZ ONDE: 
+			//	 A PRIMEIRA DIMENSÃO INDICA O ÍNDICE DO INTERVALO (CONFIG.INTERVALOS)
+			//   A SEGUNDA DIMENSÃO INDICA O NÚMERO DA NOTA DO DITADO.
+			var table = document.getElementById('gridR');
+			var grid  = "";
+			
+			grid += "<tr><td>&nbsp;</td>";
+			for (var i=0; i<config.qtdeNotas; i++){
+					grid += "<td align='center'>"+(i+1)+"</td>";
+			}
+			grid += "</tr>";
+
+			var oit;																		// NÚMERO DA OITAVA
+			var nInt = ["1J","2m","2M","3m","3M","4J","4+/5-","5J","6m","6M","7m","7M"];	// NOME DO INTERVALO
+			var int;																		// ÍNDICE PARA NOME DO INTERVALO
+			for (var i=config.intervalos.length-1; i>=0; i--) {
+				oit = Math.floor(config.intervalos[i]/12);
+				int = config.intervalos[i] % 12; 
+				if (int < 0) int += 12;
+				
+				grid += "<tr><td align='right'>"+oit+":"+nInt[int]+"</td>";
+				for (var ii=0; ii<config.qtdeNotas; ii++) {
+					grid += "<td align='center'><input type='checkbox' name='gridR["+i+"]["+ii+"]' id='gridR["+i+"]["+ii+"]' class='grid' onChange='ditado.changedGridR("+i+","+ii+")'></td>";
+				}
+				grid += "</tr>";
+			}
+			table.innerHTML = grid;
+		},
+		
+		// CADA NOTA DO DITADO DEVERÁ TER UMA ÚNICA, OU NENHUMA, RESPOSTA. 
+		// ESTA FUNÇÃO GARANTE NÃO HAVER MAIS DE UMA RESPOSTA PARA CADA NOTA DO DITADO
+		changedGridR: function (int, exe) {
+			var status = document.getElementById('gridR['+int+']['+exe+']').checked;
+			for (var i=0; i<config.intervalos.length; i++) {
+				document.getElementById('gridR['+i+']['+exe+']').checked = false;
+			}
+			document.getElementById('gridR['+int+']['+exe+']').checked = status;
+		},
+		
+		limpaGridR: function () {
+			for (var i=0; i<config.intervalos.length; i++) {
+				for (var ii=0; ii<config.qtdeNotas; ii++) {
+					document.getElementById('gridR['+i+']['+ii+']').checked = false;
+					document.getElementById('gridR['+i+']['+ii+']').className = 'grid';
+				}	
+			}
+			// MARCA A PRIMEIRA NOTA SE "INICIAR COM NOTA RAIZ" ESTIVER ATIVADO NAS CONFIGURAÇÕES
+			if (config.iniciaRaiz == true) {
+				var iRaiz = this.midinotes.indexOf(this.notaRaiz);
+				document.getElementById('gridR['+iRaiz+'][0]').checked = true;
+			}
+		},
+
+		// CRIA UM NOVO DITADO
+		novo: function() {
+			if (config.qtdeNotas == 0)	{
+				document.getElementById("tab1").click();
+				return;
+			}
+			
+			this.notaRaiz = Math.round(Math.random()*(config.limiteMaxRaiz - config.limiteMinRaiz)) + config.limiteMinRaiz;
+
+			this.midinotes = new Array(config.intervalos.length);
+			for (var i=0; i<this.midinotes.length; i++) {
+				this.midinotes[i] = config.intervalos[i] + this.notaRaiz;
+			}
+
+			var ditado = new Array(config.qtdeNotas);
+			this.ditadomidi = new Array(config.qtdeNotas);			
+			for (var i=0; i<ditado.length; i++) {
+				ditado[i] = Math.floor(Math.random()*this.midinotes.length);
+				this.ditadomidi[i] = this.midinotes[ditado[i]];
+			}
+
+			if (config.iniciaRaiz == true) {
+				ditado[0] = this.midinotes.indexOf(this.notaRaiz);
+				this.ditadomidi[0] = this.notaRaiz;
+			}
+
+			this.mp3notes = [];
+			for (var i=0; i<this.midinotes.length; i++) {
+				this.mp3notes[i] = "";
+				for (var ii=0; ii<60-config.velocidade; ii++) {
+					this.mp3notes[i] += window.atob(soundfont.piano[this.midinotes[i]][ii]);
+				}
+			}
+
+			this.mp3 = "";
+			for (var i=0; i<config.qtdeNotas; i++) {
+				this.mp3 += this.mp3notes[ditado[i]];
+			}
+			this.mp3 = soundfont.piano['start'] + window.btoa(this.mp3);
+
+			// ATRIBUINDO AUDIO AO COMPONENTE HTML
+			document.getElementById('player_source').src = this.mp3;
+			document.getElementById('player_audio').load();
+			document.getElementById('player_audio').play();
+			
+			// ATIVANDO O BOTÃO DE RESPOSTA (CASO ESTEJA DESABILITADO)
+			document.getElementById('btn_responder').disabled = false;
+			
+			// EXIBE O NÚMERO DO EXERCÍCIO ATUAL
+			document.getElementById('lbl_exercicio').innerText = estatistica.pontuacao.length + 1;
+			
+			// EXIBE O NOME DA NOTA RAIZ
+			var notas = ['C','C#/Db','D','D#/Eb','E','F','F#/Gb','G','G#/Ab','A','A#/Bb','B'];
+			document.getElementById('lbl_notaRaiz').innerText = notas[this.notaRaiz%12]+" ("+Math.floor(this.notaRaiz/12 - 1) + ")";
+			
+			// LIMPA RESPOSTA DO EXERCÍCIO ANTERIOR
+			this.limpaGridR();
+			
+			// APAGA PONTUAÇÕES DO EXERCÍCIO ANTERIOR
+			document.getElementById('lbl_pontuacao').innerText = "";
+			document.getElementById('lbl_acertos').innerText = "";
+			document.getElementById('lbl_erros').innerText = "";
+			
+			// DESABILITA O BOTÃO PARA CRIAR NOVO EXERCÍCIO (SERÁ HABILITADO NOVAMENTE QUANDO A RESPOSTA DO EXERCÍCIO ESTIVER CORRETA)
+			document.getElementById('btn_novo').disabled = true;
+			
+			this.primeiraResposta = false;
+		},
+
+		// VERIFICA A RESPOSTA DO DITADO
+		responder: function () {
+			var resposta = new Array(config.qtdeNotas);
+
+			// OBTENDO A RESPOSTA DO USUÁRIO
+			for (var i=0; i<resposta.length; i++) {
+				resposta[i] = null;
+				for (var ii=0; ii<config.intervalos.length; ii++) {
+					if (document.getElementById('gridR['+ii+']['+i+']').checked == true) {
+						resposta[i] = ditado.midinotes[ii];
+						break;
+					}
+				}
+			}
+			
+			// COMPARANDO A RESPOSTA
+			var ii;
+			this.acertos  = 0;
+			this.erros    = 0;
+			var pontuacao = 0;
+			for (var i=0; i<resposta.length; i++) {
+				if (resposta[i] == null) continue;
+				if (resposta[i] == ditado.ditadomidi[i]) {
+					this.acertos++;
+					ii = ditado.midinotes.indexOf(resposta[i]);
+					document.getElementById('gridR['+ii+']['+i+']').className = 'grid_correto';
+				}
+				else {
+					this.erros++;
+					ii = ditado.midinotes.indexOf(resposta[i]);
+					document.getElementById('gridR['+ii+']['+i+']').className = 'grid_errado';
+				}
+			}
+			
+			// CALCULANDO A PONTUAÇÃO
+			pontuacao	= ((this.acertos-this.erros) / config.qtdeNotas);
+			document.getElementById('lbl_pontuacao').innerHTML  = (100 *pontuacao).toFixed(2);
+			document.getElementById('lbl_acertos').innerText 	= this.acertos;
+			document.getElementById('lbl_erros').innerText 		= this.erros;
+			
+			var numExercicio = parseInt(document.getElementById('lbl_exercicio').innerText);
+			if (this.primeiraResposta == false) {
+				estatistica.pontuacao[estatistica.pontuacao.length] = pontuacao * 100;
+				this.primeiraResposta = true;
+			}
+	
+			// HABILITA NOVO EXERCICIO SE A RESPOSTA ESTIVER 100% CORRETA
+			// E TOCA SOM PARA ACERTO OU ERRO		
+			var snd;
+			if (this.acertos == resposta.length) {
+				document.getElementById('btn_novo').disabled = false;
+				snd = sound.correct;
+			}
+			else
+				snd = sound.wrong;
+				
+			document.getElementById('player_source2').src = snd;
+			document.getElementById('player_audio2').load();
+			document.getElementById('player_audio2').play();
+			
+			console.log(document.getElementById('player_source2'));
+			console.log(document.getElementById('player_audio2'));
+		}
+	};
+	
+	var estatistica = {
+		pontuacao:	[],
+		
+		getGlobal: function() {
+			var maximo = this.pontuacao[0];
+			var minimo = this.pontuacao[0];
+			var media  = 0;
+			
+			for (var i=0; i<this.pontuacao.length; i++) {
+				media += this.pontuacao[i];
+				if (this.pontuacao[i] > maximo) maximo = this.pontuacao[i];
+				if (this.pontuacao[i] < minimo) minimo = this.pontuacao[i];
+			}			
+
+			media /= this.pontuacao.length;
+
+			// CRIANDO BARRAS DE PROGRESSO
+			if (this.pontuacao.length == 0) {
+				document.getElementById('pgb_minimo').style.width 			= 0;
+				document.getElementById('pgb_maximo').style.width 			= 0;
+				document.getElementById('pgb_media').style.width  			= 0;
+				document.getElementById('lbl_estatisticaMinimo').innerText 	= 0;
+				document.getElementById('lbl_estatisticaMaximo').innerText 	= 0;
+				document.getElementById('lbl_estatisticaMedia').innerText  	= 0;
+			}
+			else {
+				document.getElementById('lbl_estatisticaExercicios').innerText = this.pontuacao.length;
+				document.getElementById('pgb_minimo').style.width 			= minimo +"%";
+				document.getElementById('pgb_maximo').style.width 			= maximo +"%";
+				document.getElementById('pgb_media').style.width  			= media  +"%";
+				document.getElementById('lbl_estatisticaMinimo').innerText 	= minimo.toFixed(2);
+				document.getElementById('lbl_estatisticaMaximo').innerText 	= maximo.toFixed(2);
+				document.getElementById('lbl_estatisticaMedia').innerText  	= media.toFixed(2);
+			}
+		}
+	};
+</script>
+</head>
+
+<body class="body">
+<div id="Tabs1">
+    <ul>
+        <li><a href="#tabs-1" id="tab1">Configura&ccedil;&otilde;es</a></li>
+        <li><a href="#tabs-2" id="tab2">Ditado</a></li>
+        <li><a href="#tabs-3" id="tab3" onClick="estatistica.getGlobal()">Estat&iacute;stica</a></li>
+        <li><a href="#tabs-4" id="tab4">Cr&eacute;ditos</a></li>
+    </ul>
+    <div id="tabs-1">
+        <table width="100%" border="0" cellpadding="1" cellspacing="1">
+                <tr>
+                    <th>Intervalos x Oitavas</th>
+                    <th>Outras Configura&ccedil;&otilde;es</th>
+                </tr>
+                <tr>
+                    <td><table width="100%" border="0" cellpadding="1" cellspacing="1">
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td align="center">1J</td>
+                            <td align="center">2m</td>
+                            <td align="center">2M</td>
+                            <td align="center">3m</td>
+                            <td align="center">3M</td>
+                            <td align="center">4J</td>
+                            <td align="center">4+/5-</td>
+                            <td align="center">5J</td>
+                            <td align="center">6m</td>
+                            <td align="center">6M</td>
+                            <td align="center">7m</td>
+                            <td align="center">7M</td>
+                        </tr>
+                        <tr>
+                            <td align="right">+3</td>
+                            <td align="center"><input type="checkbox" name="gridIO[0][0]"  id="gridIO[0][0]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[0][1]"  id="gridIO[0][1]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[0][2]"  id="gridIO[0][2]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[0][3]"  id="gridIO[0][3]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[0][4]"  id="gridIO[0][4]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[0][5]"  id="gridIO[0][5]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[0][6]"  id="gridIO[0][6]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[0][7]"  id="gridIO[0][7]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[0][8]"  id="gridIO[0][8]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[0][9]"  id="gridIO[0][9]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[0][10]" id="gridIO[0][10]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[0][11]" id="gridIO[0][11]" class="grid"></td>
+                        </tr>
+                        <tr>
+                            <td align="right">+2</td>
+                            <td align="center"><input type="checkbox" name="gridIO[1][0]"  id="gridIO[1][0]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[1][1]"  id="gridIO[1][1]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[1][2]"  id="gridIO[1][2]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[1][3]"  id="gridIO[1][3]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[1][4]"  id="gridIO[1][4]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[1][5]"  id="gridIO[1][5]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[1][6]"  id="gridIO[1][6]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[1][7]"  id="gridIO[1][7]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[1][8]"  id="gridIO[1][8]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[1][9]"  id="gridIO[1][9]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[1][10]" id="gridIO[1][10]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[1][11]" id="gridIO[1][11]" class="grid"></td>
+                        </tr>
+                        <tr>
+                            <td align="right">+1</td>
+                            <td align="center"><input type="checkbox" name="gridIO[2][0]"  id="gridIO[2][0]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[2][1]"  id="gridIO[2][1]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[2][2]"  id="gridIO[2][2]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[2][3]"  id="gridIO[2][3]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[2][4]"  id="gridIO[2][4]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[2][5]"  id="gridIO[2][5]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[2][6]"  id="gridIO[2][6]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[2][7]"  id="gridIO[2][7]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[2][8]"  id="gridIO[2][8]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[2][9]"  id="gridIO[2][9]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[2][10]" id="gridIO[2][10]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[2][11]" id="gridIO[2][11]" class="grid"></td>
+                        </tr>
+                        <tr>
+                            <td align="right">0</td>
+                            <td align="center"><input name="gridIO[3][0]" type="checkbox" class="grid"  id="gridIO[3][0]" checked></td>
+                            <td align="center"><input type="checkbox" name="gridIO[3][1]"  id="gridIO[3][1]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[3][2]"  id="gridIO[3][2]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[3][3]"  id="gridIO[3][3]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[3][4]"  id="gridIO[3][4]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[3][5]"  id="gridIO[3][5]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[3][6]"  id="gridIO[3][6]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[3][7]"  id="gridIO[3][7]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[3][8]"  id="gridIO[3][8]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[3][9]"  id="gridIO[3][9]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[3][10]" id="gridIO[3][10]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[3][11]" id="gridIO[3][11]" class="grid"></td>
+                        </tr>
+                        <tr>
+                            <td align="right">-1</td>
+                            <td align="center"><input type="checkbox" name="gridIO[4][0]"  id="gridIO[4][0]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[4][1]"  id="gridIO[4][1]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[4][2]"  id="gridIO[4][2]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[4][3]"  id="gridIO[4][3]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[4][4]"  id="gridIO[4][4]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[4][5]"  id="gridIO[4][5]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[4][6]"  id="gridIO[4][6]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[4][7]"  id="gridIO[4][7]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[4][8]"  id="gridIO[4][8]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[4][9]"  id="gridIO[4][9]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[4][10]" id="gridIO[4][10]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[4][11]" id="gridIO[4][11]" class="grid"></td>
+                        </tr>
+                        <tr>
+                            <td align="right">-2</td>
+                            <td align="center"><input type="checkbox" name="gridIO[5][0]"  id="gridIO[5][0]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[5][1]"  id="gridIO[5][1]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[5][2]"  id="gridIO[5][2]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[5][3]"  id="gridIO[5][3]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[5][4]"  id="gridIO[5][4]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[5][5]"  id="gridIO[5][5]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[5][6]"  id="gridIO[5][6]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[5][7]"  id="gridIO[5][7]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[5][8]"  id="gridIO[5][8]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[5][9]"  id="gridIO[5][9]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[5][10]" id="gridIO[5][10]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[5][11]" id="gridIO[5][11]" class="grid"></td>
+                        </tr>
+                        <tr>
+                            <td align="right">-3</td>
+                            <td align="center"><input type="checkbox" name="gridIO[6][0]"  id="gridIO[6][0]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[6][1]"  id="gridIO[6][1]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[6][2]"  id="gridIO[6][2]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[6][3]"  id="gridIO[6][3]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[6][4]"  id="gridIO[6][4]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[6][5]"  id="gridIO[6][5]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[6][6]"  id="gridIO[6][6]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[6][7]"  id="gridIO[6][7]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[6][8]"  id="gridIO[6][8]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[6][9]"  id="gridIO[6][9]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[6][10]" id="gridIO[6][10]" class="grid"></td>
+                            <td align="center"><input type="checkbox" name="gridIO[6][11]" id="gridIO[6][11]" class="grid"></td>
+                        </tr>
+                    </table></td>
+                    <td><table width="100%" border="0" cellpadding="1" cellspacing="5">
+                        <tr>
+                            <td align="right">Quantidade de notas:</td>
+                            <td><select name="form['qtdeNotas']" id="form['qtdeNotas']">
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8" selected>8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td align="right">Velocidade:</td>
+                            <td><select name="form['velocidade']" id="form['velocidade']">
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                                <option value="31">31</option>
+                                <option value="32">32</option>
+                                <option value="33">33</option>
+                                <option value="34">34</option>
+                                <option value="35" selected>35</option>
+                                <option value="36">36</option>
+                                <option value="37">37</option>
+                                <option value="38">38</option>
+                                <option value="39">39</option>
+                                <option value="40">40</option>
+                                <option value="41">41</option>
+                                <option value="42">42</option>
+                                <option value="43">43</option>
+                                <option value="44">44</option>
+                                <option value="45">45</option>
+                                <option value="46">46</option>
+                                <option value="47">47</option>
+                                <option value="48">48</option>
+                                <option value="49">49</option>
+                                <option value="50">50</option>
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td align="right">Iniciar com nota raiz:</td>
+                            <td><input name="form['iniciaRaiz']" type="checkbox" class="grid" id="form['iniciaRaiz']" checked></td>
+                        </tr>
+                        <tr>
+                            <td align="right">Limites da nota raiz:</td>
+                            <td><select name="form['limiteMinRaiz']" id="form['limiteMinRaiz']">
+                                <option value="36">C2</option>
+                                <option value="37">C#2/Db2</option>
+                                <option value="38">D2</option>
+                                <option value="39">D#2/Eb2</option>
+                                <option value="40">E2</option>
+                                <option value="41">F2</option>
+                                <option value="42">F#2/Gb2</option>
+                                <option value="43">G2</option>
+                                <option value="44">G#2/Ab2</option>
+                                <option value="45">A2</option>
+                                <option value="46">A#2/Bb2</option>
+                                <option value="47">B2</option>
+                                <option value="48">C3</option>
+                                <option value="49">C#3/Db3</option>
+                                <option value="50">D3</option>
+                                <option value="51">D#3/Eb3</option>
+                                <option value="52">E3</option>
+                                <option value="53" selected>F3</option>
+                                <option value="54">F#3/Gb3</option>
+                                <option value="55">G3</option>
+                                <option value="56">G#3/Ab3</option>
+                                <option value="57">A3</option>
+                                <option value="58">A#3/Bb3</option>
+                                <option value="59">B3</option>
+                                <option value="60">C4</option>
+                                <option value="61">C#4/Db4</option>
+                                <option value="62">D4</option>
+                                <option value="63">D#4/Eb4</option>
+                                <option value="64">E4</option>
+                                <option value="65">F4</option>
+                                <option value="66">F#4/Gb4</option>
+                                <option value="67">G4</option>
+                                <option value="68">G#4/Ab4</option>
+                                <option value="69">A4</option>
+                                <option value="70">A#4/Bb4</option>
+                                <option value="71">B4</option>
+                                <option value="72">C5</option>
+                                <option value="73">C#5/Db5</option>
+                                <option value="74">D5</option>
+                                <option value="75">D#5/Eb5</option>
+                                <option value="76">E5</option>
+                                <option value="77">F5</option>
+                                <option value="78">F#5/Gb5</option>
+                                <option value="79">G5</option>
+                                <option value="80">G#5/Ab5</option>
+                                <option value="81">A5</option>
+                                <option value="82">A#5/Bb5</option>
+                                <option value="83">B5</option>
+                                <option value="84">C6</option>
+                                <option value="85">C#6/Db6</option>
+                                <option value="86">D6</option>
+                                <option value="87">D#6/Eb6</option>
+                                <option value="88">E6</option>
+                                <option value="89">F6</option>
+                                <option value="90">F#6/Gb6</option>
+                                <option value="91">G6</option>
+                                <option value="92">G#6/Ab6</option>
+                                <option value="93">A6</option>
+                                <option value="94">A#6/Bb6</option>
+                                <option value="95">B6</option>
+                            </select>
+                            <select name="form['limiteMaxRaiz']" id="form['limiteMaxRaiz']">
+                                <option value="36">C2</option>
+                                <option value="37">C#2/Db2</option>
+                                <option value="38">D2</option>
+                                <option value="39">D#2/Eb2</option>
+                                <option value="40">E2</option>
+                                <option value="41">F2</option>
+                                <option value="42">F#2/Gb2</option>
+                                <option value="43">G2</option>
+                                <option value="44">G#2/Ab2</option>
+                                <option value="45">A2</option>
+                                <option value="46">A#2/Bb2</option>
+                                <option value="47">B2</option>
+                                <option value="48">C3</option>
+                                <option value="49">C#3/Db3</option>
+                                <option value="50">D3</option>
+                                <option value="51">D#3/Eb3</option>
+                                <option value="52">E3</option>
+                                <option value="53">F3</option>
+                                <option value="54">F#3/Gb3</option>
+                                <option value="55">G3</option>
+                                <option value="56">G#3/Ab3</option>
+                                <option value="57">A3</option>
+                                <option value="58">A#3/Bb3</option>
+                                <option value="59">B3</option>
+                                <option value="60">C4</option>
+                                <option value="61">C#4/Db4</option>
+                                <option value="62">D4</option>
+                                <option value="63">D#4/Eb4</option>
+                                <option value="64" selected>E4</option>
+                                <option value="65">F4</option>
+                                <option value="66">F#4/Gb4</option>
+                                <option value="67">G4</option>
+                                <option value="68">G#4/Ab4</option>
+                                <option value="69">A4</option>
+                                <option value="70">A#4/Bb4</option>
+                                <option value="71">B4</option>
+                                <option value="72">C5</option>
+                                <option value="73">C#5/Db5</option>
+                                <option value="74">D5</option>
+                                <option value="75">D#5/Eb5</option>
+                                <option value="76">E5</option>
+                                <option value="77">F5</option>
+                                <option value="78">F#5/Gb5</option>
+                                <option value="79">G5</option>
+                                <option value="80">G#5/Ab5</option>
+                                <option value="81">A5</option>
+                                <option value="82">A#5/Bb5</option>
+                                <option value="83">B5</option>
+                                <option value="84">C6</option>
+                                <option value="85">C#6/Db6</option>
+                                <option value="86">D6</option>
+                                <option value="87">D#6/Eb6</option>
+                                <option value="88">E6</option>
+                                <option value="89">F6</option>
+                                <option value="90">F#6/Gb6</option>
+                                <option value="91">G6</option>
+                                <option value="92">G#6/Ab6</option>
+                                <option value="93">A6</option>
+                                <option value="94">A#6/Bb6</option>
+                                <option value="95">B6</option>
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="right">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="right">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center"><input type="button" name="button3" id="button3" value="    Salvar    " onClick="config.setConfig()"></td>
+                        </tr>
+                    </table></td>
+                </tr>
+        </table>
+    </div>
+    <div id="tabs-2">
+        <table width="100%" border="0" cellpadding="1" cellspacing="5">
+            <tr>
+                <td width="15%" rowspan="2"><input name="btn_responder" type="button" disabled id="btn_responder" onClick="ditado.responder()" value="Responder"></td>
+                <td width="15%" rowspan="2"><input name="btn_novo" type="button" disabled id="btn_novo" onClick="ditado.novo()" value="    Novo    "></td>
+
+                <td width="25%">Exerc&iacute;cio: <label id="lbl_exercicio">0</label></td>
+                <td width="45%" colspan="2">Nota Raiz: <label id="lbl_notaRaiz"></label></td>
+            </tr>
+            <tr>
+                <td>Pontua&ccedil;&atilde;o: <label id="lbl_pontuacao"></label>%</td>
+                <td>Acertos: <label id="lbl_acertos"></label>
+                <td>Erros: <label id="lbl_erros"></label></td>
+            </tr>
+            <tr>
+                <td colspan="5"><table border="0" cellpadding="1" cellspacing="1" id="gridR"></table></td>
+            </tr>
+            <tr>
+                <td colspan="5"><audio controls id="player_audio"><source id="player_source" /></audio></td>
+            </tr>
+        </table>
+        <audio id="player_audio2" style="visibility:hidden"><source id="player_source2" /></audio>
+    </div>
+    <div id="tabs-3">
+        <table width="650" border="0" align="center" cellpadding="1" cellspacing="5">
+            <tr>
+                <td width="187" align="right">Exerc&iacute;cios:</td>
+                <td width="327"><label id="lbl_estatisticaExercicios"></label></td>
+                <td width="110">&nbsp;</td>
+            </tr>
+            <tr>
+                <td align="right">&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td align="right">Pontua&ccedil;&atilde;o M&iacute;nima:</td>
+                <td><div class="pgbar"><div id="pgb_minimo"></div></div></td>
+                <td><label id="lbl_estatisticaMinimo"></label> %</td>
+            </tr>
+            <tr>
+                <td align="right">Pontua&ccedil;&atilde;o M&eacute;dia:</td>
+                <td><div class="pgbar"><div id="pgb_media"></div></div></td>
+                <td><label id="lbl_estatisticaMedia"></label> %</td>
+            </tr>
+            <tr>
+                <td align="right">Pontua&ccedil;&atilde;o M&aacute;xima:</td>
+                <td><div class="pgbar"><div id="pgb_maximo"></div></div></td>
+                <td><label id="lbl_estatisticaMaximo"></label> %</td>
+            </tr>
+        </table>
+    </div>
+    <div id="tabs-4">
+        <table width="500" border="0" align="center" cellpadding="1" cellspacing="5">
+            <tr>
+                <td><h1 align="center">Ditado Mel&oacute;dico Relativo</h1></td>
+            </tr>
+            <tr>
+                <td>Desenvolvido por:</td>
+            </tr>
+            <tr>
+                <td align="center"><img src="img/waao.PNG" style="border-radius:10px; width:50%" /></td>
+            </tr>
+            <tr>
+                <td align="center"><h3>Walter Alexandre A. de Oliveira</h3></td>
+            </tr> 
+        </table>
+    </div>
+</div>
+<script src="image.js"></script>
+<script type="text/javascript">
+$(function() {
+	$( "#Tabs1" ).tabs(); 
+
+//==================================================	
+	var cls;
+	var obj;
+
+	// ui-bg_glass_75_dadada_1x400.png
+	cls = ["ui-state-hover","ui-widget-content","ui-state-hover","ui-widget-header","ui-state-hover",
+			"ui-state-focus","ui-widget-content","ui-state-focus","ui-widget-header","ui-state-focus"];
+	for (var i=0; i<cls.length; i++) {
+		obj = document.getElementsByClassName(cls[i]);
+		for (var ii=0; ii<obj.length; ii++) {
+			obj[ii].style.background = 'url('+image[1]+')';
+		}
+	}
+	
+	// ui-bg_glass_65_ffffff_1x400.png
+	cls = ["ui-state-active","ui-widget-content","ui-state-active","ui-widget-header","ui-state-active"];
+	for (var i=0; i<cls.length; i++) {
+		obj = document.getElementsByClassName(cls[i]);
+		for (var ii=0; ii<obj.length; ii++) {
+			obj[ii].style.background = 'url('+image[2]+')';
+		}
+	}
+	
+	// ui-bg_glass_75_e6e6e6_1x400.png
+	cls = ["ui-state-default","ui-widget-content","ui-state-default","ui-widget-header","ui-state-default"];
+	for (var i=0; i<cls.length; i++) {
+		obj = document.getElementsByClassName(cls[i]);
+		for (var ii=0; ii<obj.length; ii++) {
+			obj[ii].style.background = 'url('+image[3]+')';
+		}
+	}
+	
+	// ui-bg_flat_75_ffffff_40x100.png
+	cls = ["ui-widget-content"];
+	for (var i=0; i<cls.length; i++) {
+		obj = document.getElementsByClassName(cls[i]);
+		for (var ii=0; ii<obj.length; ii++) {
+			obj[ii].style.background = 'url('+image[3]+')';
+		}
+	}
+	
+	// ui-bg_highlight-soft_75_cccccc_1x100.png
+	cls = ["ui-widget-header", "body"];
+	for (var i=0; i<cls.length; i++) {
+		obj = document.getElementsByClassName(cls[i]);
+		for (var ii=0; ii<obj.length; ii++) {
+			obj[ii].style.background = 'url('+image[0]+')';
+		}
+	}
+});
+</script>
+
+</body>
+</html>
