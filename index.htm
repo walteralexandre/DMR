@@ -108,16 +108,16 @@
 <body class="body">
 <div id="Tabs1">
     <ul>
-        <li><a href="#tabs-1" id="tab1">Configura&ccedil;&otilde;es</a></li>
-        <li><a href="#tabs-2" id="tab2">Ditado</a></li>
-        <li><a href="#tabs-3" id="tab3" onClick="estatistica.getGlobal()">Estat&iacute;stica</a></li>
-        <li><a href="#tabs-4" id="tab4">Cr&eacute;ditos</a></li>
+        <li><a href="#tabs-1" id="tab1">Settings</a></li>
+        <li><a href="#tabs-2" id="tab2">Dictation</a></li>
+        <li><a href="#tabs-3" id="tab3" onClick="estatistica.getGlobal()">Statistics</a></li>
+        <li><a href="#tabs-4" id="tab4">Credits</a></li>
     </ul>
     <div id="tabs-1">
         <table width="100%" border="0" cellpadding="1" cellspacing="1">
                 <tr>
-                    <th>Intervalos x Oitavas</th>
-                    <th>Outras Configura&ccedil;&otilde;es</th>
+                    <th>Intervals x Octaves</th>
+                    <th>Other Settings</th>
                 </tr>
                 <tr>
                     <td><table width="100%" border="0" cellpadding="1" cellspacing="1">
@@ -244,7 +244,7 @@
                     </table></td>
                     <td><table width="100%" border="0" cellpadding="1" cellspacing="5">
                         <tr>
-                            <td align="right">Quantidade de notas:</td>
+                            <td align="right">Number of notes:</td>
                             <td><select name="form['qtdeNotas']" id="form['qtdeNotas']">
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -266,7 +266,7 @@
                             </select></td>
                         </tr>
                         <tr>
-                            <td align="right">Velocidade:</td>
+                            <td align="right">Speed:</td>
                             <td><select name="form['velocidade']" id="form['velocidade']">
                                 <option value="10">10</option>
                                 <option value="11">11</option>
@@ -312,11 +312,11 @@
                             </select></td>
                         </tr>
                         <tr>
-                            <td align="right">Iniciar com nota raiz:</td>
+                            <td align="right">Start with root note:</td>
                             <td><input name="form['iniciaRaiz']" type="checkbox" class="grid" id="form['iniciaRaiz']" checked></td>
                         </tr>
                         <tr>
-                            <td align="right">Limites da nota raiz:</td>
+                            <td align="right">Root note limits:</td>
                             <td><select name="form['limiteMinRaiz']" id="form['limiteMinRaiz']">
                                 <option value="36">C2</option>
                                 <option value="37">C#2/Db2</option>
@@ -449,7 +449,7 @@
                             <td colspan="2" align="right">&nbsp;</td>
                         </tr>
                         <tr>
-                            <td colspan="2" align="center"><input type="button" name="button3" id="button3" value="    Salvar    " onClick="config.setConfig()"></td>
+                            <td colspan="2" align="center"><input type="button" name="button3" id="button3" value="    Save    " onClick="config.setConfig()"></td>
                         </tr>
                     </table></td>
                 </tr>
@@ -458,16 +458,16 @@
     <div id="tabs-2">
         <table width="100%" border="0" cellpadding="1" cellspacing="5">
             <tr>
-                <td width="15%" rowspan="2"><input name="btn_responder" type="button" disabled id="btn_responder" onClick="ditado.responder()" value="Responder"></td>
-                <td width="15%" rowspan="2"><input name="btn_novo" type="button" disabled id="btn_novo" onClick="ditado.novo()" value="    Novo    "></td>
+                <td width="15%" rowspan="2"><input name="btn_responder" type="button" disabled id="btn_responder" onClick="ditado.responder()" value="Answer"></td>
+                <td width="15%" rowspan="2"><input name="btn_novo" type="button" disabled id="btn_novo" onClick="ditado.novo()" value="    New    "></td>
 
-                <td width="25%">Exerc&iacute;cio: <label id="lbl_exercicio">0</label></td>
-                <td width="45%" colspan="2">Nota Raiz: <label id="lbl_notaRaiz"></label></td>
+                <td width="25%">Lesson: <label id="lbl_exercicio">0</label></td>
+                <td width="45%" colspan="2">Root note: <label id="lbl_notaRaiz"></label></td>
             </tr>
             <tr>
-                <td>Pontua&ccedil;&atilde;o: <label id="lbl_pontuacao"></label>%</td>
-                <td>Acertos: <label id="lbl_acertos"></label>
-                <td>Erros: <label id="lbl_erros"></label></td>
+                <td>Score: <label id="lbl_pontuacao"></label>%</td>
+                <td>Hits: <label id="lbl_acertos"></label>
+                <td>Miss: <label id="lbl_erros"></label></td>
             </tr>
             <tr>
                 <td colspan="5"><table border="0" cellpadding="1" cellspacing="1" id="gridR"></table></td>
@@ -481,7 +481,7 @@
     <div id="tabs-3">
         <table width="650" border="0" align="center" cellpadding="1" cellspacing="5">
             <tr>
-                <td width="187" align="right">Exerc&iacute;cios:</td>
+                <td width="187" align="right">Lessons:</td>
                 <td width="327"><label id="lbl_estatisticaExercicios"></label></td>
                 <td width="110">&nbsp;</td>
             </tr>
@@ -491,17 +491,17 @@
                 <td>&nbsp;</td>
             </tr>
             <tr>
-                <td align="right">Pontua&ccedil;&atilde;o M&iacute;nima:</td>
+                <td align="right">Minimum Score:</td>
                 <td><div class="pgbar"><div id="pgb_minimo"></div></div></td>
                 <td><label id="lbl_estatisticaMinimo"></label> %</td>
             </tr>
             <tr>
-                <td align="right">Pontua&ccedil;&atilde;o M&eacute;dia:</td>
+                <td align="right">Average Score:</td>
                 <td><div class="pgbar"><div id="pgb_media"></div></div></td>
                 <td><label id="lbl_estatisticaMedia"></label> %</td>
             </tr>
             <tr>
-                <td align="right">Pontua&ccedil;&atilde;o M&aacute;xima:</td>
+                <td align="right">Maximum Score:</td>
                 <td><div class="pgbar"><div id="pgb_maximo"></div></div></td>
                 <td><label id="lbl_estatisticaMaximo"></label> %</td>
             </tr>
@@ -510,10 +510,10 @@
     <div id="tabs-4">
         <table width="500" border="0" align="center" cellpadding="1" cellspacing="5">
             <tr>
-                <td><h1 align="center">Ditado Mel&oacute;dico Relativo</h1></td>
+                <td><h1 align="center">Relative Melodic Dictation</h1></td>
             </tr>
             <tr>
-                <td>Desenvolvido por:</td>
+                <td>Developed by:</td>
             </tr>
             <tr>
                 <td align="center"><img src="img/waao.PNG" style="border-radius:10px; width:50%" /></td>
